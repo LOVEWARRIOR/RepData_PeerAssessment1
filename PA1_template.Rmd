@@ -22,7 +22,7 @@ data1<-read.csv("activity.csv");
 data<-data1;
 complete<-data1[complete.cases(data1),];
 
-histo<-aggregate(list(complete$steps),list(complete$date),mean,data=complete);
+histo<-aggregate(list(complete$steps),list(complete$date),sum);
 histo<-cbind(histo,1:nrow(histo))
 
 names(histo)<-c("date","steps","count");
@@ -38,10 +38,15 @@ print("media: ");print(median_number)
 
 average daily activity pattern
 ```{r  average daily activity pattern}
-series<-aggregate(complete$steps,list(complete$interval),mean)
+series<-aggregate(complete$steps,list(complete$interval),sum)
 names(series)<-c("interval","steps")
 plot_2 <- ggplot(series,aes(interval,steps))
 plot_2+geom_line()
+```
+
+the max interval throughout all days
+```{r max interval}
+print(series[series$steps==max(series$steps),"interval"])
 
 ```
 
@@ -61,7 +66,7 @@ log<-complete.cases(data1)
 data1[!log,"steps"]<-0
 complete<-data1[complete.cases(data1),];
 
-histo<-aggregate(list(complete$steps),list(complete$date),mean,data=complete);
+histo<-aggregate(list(complete$steps),list(complete$date),sum);
 histo<-cbind(histo,1:nrow(histo))
 
 names(histo)<-c("date","steps","count");
@@ -73,7 +78,7 @@ median_number = median(histo$steps)
 print("mean: ");print(mean_number)
 print("media: ");print(median_number)
 
-series<-aggregate(complete$steps,list(complete$interval),mean)
+series<-aggregate(complete$steps,list(complete$interval),sum)
 names(series)<-c("interval","steps")
 plot_2 <- ggplot(series,aes(interval,steps))
 plot_2+geom_line()
@@ -103,5 +108,4 @@ names(plot_5_data)<-c("temp","interval","steps")
 qplot(interval,steps,data=plot_5_data,facets=.~temp,geom = c("line"))
 
 ```
-
 
