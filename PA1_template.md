@@ -5,10 +5,7 @@ date: "Tuesday, August 05, 2014"
 output: html_document
 ---
 
-```{r readdata}
 
-
-``` 
 
 
 #data without missing value
@@ -16,7 +13,8 @@ output: html_document
 
 
 mean total number of steps taken per day
-```{r plot_the_mean}
+
+```r
 library(ggplot2)
 data1<-read.csv("activity.csv");
 data<-data1;
@@ -29,33 +27,64 @@ names(histo)<-c("date","steps","count");
 plot_1<-ggplot(histo,aes(count,steps));
 plot_1<-plot_1+ geom_bar(stat="identity",colour="red",fill="red");
 plot_1;
+```
+
+![plot of chunk plot_the_mean](figure/plot_the_mean.png) 
+
+```r
 mean_number = mean(histo$steps)
 median_number = median(histo$steps)
 print("mean: ");print(mean_number)
+```
+
+```
+## [1] "mean: "
+```
+
+```
+## [1] 37.38
+```
+
+```r
 print("media: ");print(median_number)
+```
+
+```
+## [1] "media: "
+```
+
+```
+## [1] 37.38
 ```
 
 
 average daily activity pattern
-```{r  average daily activity pattern}
+
+```r
 series<-aggregate(complete$steps,list(complete$interval),mean)
 names(series)<-c("interval","steps")
 plot_2 <- ggplot(series,aes(interval,steps))
 plot_2+geom_line()
-
 ```
+
+![plot of chunk average daily activity pattern](figure/average daily activity pattern.png) 
 
 
 
 
 number of NAs
-```{r NA}
-nrow(data)-sum(complete.cases(data))
 
+```r
+nrow(data)-sum(complete.cases(data))
+```
+
+```
+## [1] 2304
 ```
 
 #The data with Nas replaced by ZERO
-```{r}
+
+```r
 data1<-read.csv("activity.csv")
 log<-complete.cases(data1)
 data1[!log,"steps"]<-0
@@ -68,28 +97,69 @@ names(histo)<-c("date","steps","count");
 plot_1<-ggplot(histo,aes(count,steps));
 plot_1<-plot_1+ geom_bar(stat="identity",colour="red",fill="red");
 plot_1;
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-11.png) 
+
+```r
 mean_number = mean(histo$steps)
 median_number = median(histo$steps)
 print("mean: ");print(mean_number)
-print("media: ");print(median_number)
+```
 
+```
+## [1] "mean: "
+```
+
+```
+## [1] 32.48
+```
+
+```r
+print("media: ");print(median_number)
+```
+
+```
+## [1] "media: "
+```
+
+```
+## [1] 36.09
+```
+
+```r
 series<-aggregate(complete$steps,list(complete$interval),mean)
 names(series)<-c("interval","steps")
 plot_2 <- ggplot(series,aes(interval,steps))
 plot_2+geom_line()
-
-
 ```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-12.png) 
 #conclusion: of course, ZEROS lower the mean so the plots are changed. But the shape of the series doesn't change and just be shorter.
 
 
-```{r}
+
+```r
 data1<-read.csv("activity.csv");
 data<-data1;
 complete<-data1[complete.cases(data1),];
 #for chinese
-log_weekdays<-week_list =="星期四" | week_list =="星期三" | week_list =="星期二" | 
-week_list =="星期一" | week_list =="星期五"
+NANANA
+```
+
+```
+## [1] NA
+```
+
+```r
+NANANA
+```
+
+```
+## [1] NA
+```
+
+```r
 #for english
 
 #log_weekdays<-week_list =="Thursday" | week_list =="Wednesday" | week_lis=="Tuesday" | week_list =="Monday" | week_list =="Friday"
@@ -101,7 +171,8 @@ new<-cbind(temp,complete)
 plot_5_data<-aggregate(new$steps,list(new$temp,new$interval),mean)
 names(plot_5_data)<-c("temp","interval","steps")
 qplot(interval,steps,data=plot_5_data,facets=.~temp,geom = c("line"))
-
 ```
+
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 
